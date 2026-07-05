@@ -52,6 +52,15 @@ export interface WikiGraphData {
   meta: WikiGraphMeta;
 }
 
+export function normalizeWikiGraphData(value: any): WikiGraphData {
+  const data = value?.data || value || {};
+  return {
+    nodes: Array.isArray(data.nodes) ? data.nodes : [],
+    edges: Array.isArray(data.edges) ? data.edges : [],
+    meta: data.meta || { mode: 'overview', total: 0, returned: 0, truncated: false },
+  };
+}
+
 export interface WikiStats {
   total_pages: number;
   pages_by_type: Record<string, number>;

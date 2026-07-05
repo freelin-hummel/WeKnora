@@ -1,0 +1,34 @@
+builtin_models:
+  - id: builtin-openrouter-deepseek-v4-flash
+    type: KnowledgeQA
+    source: remote
+    is_default: true
+    name: deepseek/deepseek-v4-flash
+    description: OpenRouter DeepSeek V4 Flash chat model for Graft comparison runs.
+    parameters:
+      base_url: https://openrouter.ai/api/v1
+      api_key: ${OPENROUTER_API_KEY}
+      provider: openrouter
+
+  - id: builtin-local-ollama-chat
+    type: KnowledgeQA
+    source: local
+    is_default: false
+    name: ${LLM_MODEL_NAME}
+    description: Local Ollama chat model for Graft comparison runs.
+    parameters:
+      base_url: ""
+      api_key: ""
+
+  - id: builtin-local-ollama-embedding
+    type: Embedding
+    source: local
+    is_default: true
+    name: ${EMBEDDING_MODEL_NAME}
+    description: Local Ollama embedding model for Graft comparison runs.
+    parameters:
+      base_url: ""
+      api_key: ""
+      embedding_parameters:
+        dimension: 768
+        truncate_prompt_tokens: 0

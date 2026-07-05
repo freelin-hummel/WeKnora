@@ -660,6 +660,7 @@ import {
   getWikiIndex,
   getWikiLog,
   getWikiGraph,
+  normalizeWikiGraphData,
   getWikiStats,
   searchWikiPages,
   listWikiIssues,
@@ -1938,7 +1939,7 @@ async function loadGraph() {
       limit: GRAPH_OVERVIEW_LIMIT,
       types: graphFilterTypesToArray(),
     })
-    graphData.value = (res as any).data || res as any
+    graphData.value = normalizeWikiGraphData(res)
     // Seed the search dropdown's empty-state with this overview snapshot
     // so opening the select without typing shows the top-500 by link_count
     // — matching what the old client-filter dropdown used to surface.
@@ -1991,7 +1992,7 @@ async function loadEgoGraph(slug: string, depth = GRAPH_EGO_DEFAULT_DEPTH) {
       limit: GRAPH_EGO_LIMIT,
       types: graphFilterTypesToArray(),
     })
-    graphData.value = (res as any).data || res as any
+    graphData.value = normalizeWikiGraphData(res)
     graphMode.value = 'ego'
     graphCenter.value = slug
     // Entering (or re-entering) a fresh ego view resets the bloom
@@ -2060,7 +2061,7 @@ async function loadBloomNeighbors(anchorSlug: string, depth = GRAPH_EGO_DEFAULT_
       limit: GRAPH_EGO_LIMIT,
       types: graphFilterTypesToArray(),
     })
-    const incoming = (res as any).data || res as any
+    const incoming = normalizeWikiGraphData(res)
     if (!incoming || !Array.isArray(incoming.nodes)) return
 
     bloomCurrentGeneration += 1
@@ -2245,7 +2246,7 @@ async function growFrontier() {
             limit: GRAPH_EGO_LIMIT,
             types: graphFilterTypesToArray(),
           })
-          const data = (res as any).data || res as any
+          const data = normalizeWikiGraphData(res)
           if (data?.nodes) responses.push(data)
         } catch (e) {
           console.error(`growFrontier: ego fetch failed for ${slug}:`, e)

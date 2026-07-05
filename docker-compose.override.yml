@@ -1,0 +1,6 @@
+services:
+  app:
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+    volumes:
+      - ./config/builtin_models.yaml:/app/config/builtin_models.yaml:ro
